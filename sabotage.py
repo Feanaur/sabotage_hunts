@@ -33,7 +33,7 @@ class SaboClient(discord.Client):
                 cards = random.choices(self.population, weights=self.weights, k=amount_of_cards)
                 await message.author.send("\n".join(cards))
             except Exception:
-                await message.channel.send("`Something went wrong. ~~And that is HEX fault!~~`")
+                await message.channel.send("Something went wrong. ~~And that is HEX fault!~~")
 
         if " update cards" in message.content:
             self.update_lists()
