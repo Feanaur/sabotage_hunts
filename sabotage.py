@@ -37,5 +37,5 @@ class SaboClient(discord.Client):
             message.channel.send("`List of cards has been updated!`")
 
 
-client = MyClient()
+client = SaboClient()
 client.run('NzUyNzc4NDMzODU1MDk0Nzk1.X1cljA.IeBOG_KkcbM9Qb66q0CTqPghJVE')
