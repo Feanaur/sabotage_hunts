@@ -17,7 +17,7 @@ class SaboClient(discord.Client):
         self.weights = []
         data = response.content.decode("utf-8").splitlines()
         for row in csv.reader(data, delimiter=','):
-            self.population.append(f" {row[0]} | {row[1]}")
+            self.population.append(f" `{row[0]}` *{row[1]}*")
             self.weights.append(float(row[2]))
 
     async def on_ready(self):
@@ -31,7 +31,8 @@ class SaboClient(discord.Client):
             try:
                 amount_of_cards = int(amount_of_cards)
                 cards = random.choices(self.population, weights=self.weights, k=amount_of_cards)
-                await message.author.send("```" + "\n".join(cards) + "```")
+                message = "**========================= CARDS DEALT =======================**"
+                await message.author.send(message + "\n".join(cards))
             except Exception:
                 await message.channel.send("Something went wrong. ~~And that is HEX fault!~~")
 
