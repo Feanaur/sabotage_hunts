@@ -32,9 +32,8 @@ class SaboClient(discord.Client):
                 amount_of_cards = int(amount_of_cards)
                 cards = random.choices(self.population, weights=self.weights, k=amount_of_cards)
                 await message.author.send("\n".join(cards))
-            except Exception as e:
-                print(e)
-                await message.channel.send("Amount of cards, you dumbo!")
+            except Exception:
+                await message.channel.send("`Something went wrong. ~~And that is HEX fault!~~`")
 
         if " update cards" in message.content:
             self.update_lists()
