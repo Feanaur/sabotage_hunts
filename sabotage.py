@@ -31,7 +31,7 @@ class SaboClient(discord.Client):
             try:
                 amount_of_cards = int(amount_of_cards)
                 cards = random.choices(self.population, weights=self.weights, k=amount_of_cards)
-                header = "**========================= CARDS DEALT =======================**"
+                header = "**========================= CARDS DEALT =======================**\n"
                 await message.author.send(header + "\n".join(cards))
             except Exception:
                 await message.channel.send("Something went wrong. ~~And that is HEX fault!~~")
