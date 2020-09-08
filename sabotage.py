@@ -5,32 +5,36 @@ import random
 import csv
 import requests
 
-url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc0bW1RxJc89pcW5Z070Vu4nTHBI9HgWE-VUVf-Ft38e16tj0NuWdLQE3w6Z4wnmCt_ZKSsBXyPxRE/pub?output=csv'
-response = requests.get(url)
-data = response.content.decode("utf-8").splitlines()
-population = []
-weights = []
-for row in csv.reader(data, delimiter=','):
-    population.append(f"*{row[0]}* `{row[1]}`")
-    weights.append(float(row[2]))
 
+class SaboClient(discord.Client):
+    def __init__(self):
+        self.population = []
+        self.weights = []
+        self.update_lists()
 
-class MyClient(discord.Client):
+    def update_lists(self):
+        url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc0bW1RxJc89pcW5Z070Vu4nTHBI9HgWE-VUVf-Ft38e16tj0NuWdLQE3w6Z4wnmCt_ZKSsBXyPxRE/pub?output=csv'
+        response = requests.get(url)
+        data = response.content.decode("utf-8").splitlines()
+        for row in csv.reader(data, delimiter=','):
+            self.population.append(f"*{row[0]}* `{row[1]}`")
+
     async def on_ready(self):
         print('Logged on as', self.user)
 
     async def on_message(self, message):
-        # don't respond to ourselves
-        print(message)
         if "draw" in message.content:
             amount_of_cards = message.content.split("draw ")[1]
             try:
                 amount_of_cards = int(amount_of_cards)
             except Exception:
-                print(message.content)
+                message.channel.send("Amount of cards, you dumbo!")
 
-            cards = random.choices(population, weights=weights, k=amount_of_cards)
+            cards = random.choices(self.population, weights=self.weights, k=amount_of_cards)
             await message.author.send("\n".join(cards))
+        if "update" in message.content:
+            self.update_lists()
+            message.channel.send("`List of cards has been updated!`")
 
 
 client = MyClient()
