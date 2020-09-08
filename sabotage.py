@@ -17,7 +17,7 @@ class SaboClient(discord.Client):
         self.weights = []
         data = response.content.decode("utf-8").splitlines()
         for row in csv.reader(data, delimiter=','):
-            self.population.append(f"*{row[0]}* `{row[1]}`")
+            self.population.append(f" {row[0]} | {row[1]}")
             self.weights.append(float(row[2]))
 
     async def on_ready(self):
@@ -31,13 +31,15 @@ class SaboClient(discord.Client):
             try:
                 amount_of_cards = int(amount_of_cards)
                 cards = random.choices(self.population, weights=self.weights, k=amount_of_cards)
-                await message.author.send("\n".join(cards))
+                await message.author.send("```" + "\n".join(cards) + "```")
             except Exception:
                 await message.channel.send("Something went wrong. ~~And that is HEX fault!~~")
 
         if " update cards" in message.content:
             self.update_lists()
             await message.channel.send("`List of cards has been updated!`")
+        if "this is fine" in message.content:
+            await message.channel.send("https://tenor.com/view/this-is-fine-fire-coffee-dog-gif-10959043")
 
 
 client = SaboClient()
