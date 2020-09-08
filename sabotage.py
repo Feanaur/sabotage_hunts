@@ -10,7 +10,7 @@ class SaboClient(discord.Client):
     async def __init__(self):
         self.population = []
         self.weights = []
-        self.update_lists()
+        await self.update_lists()
 
     async def update_lists(self):
         url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc0bW1RxJc89pcW5Z070Vu4nTHBI9HgWE-VUVf-Ft38e16tj0NuWdLQE3w6Z4wnmCt_ZKSsBXyPxRE/pub?output=csv'
