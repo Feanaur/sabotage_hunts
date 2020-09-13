@@ -12,11 +12,14 @@ def update_lists(url):
     cards_response = requests.get(url)
     population = []
     weights = []
+    time = None
     data = cards_response.content.decode("utf-8").splitlines()
-    for row in csv.reader(data, delimiter=','):
+    for index, row in enumerate(csv.reader(data, delimiter=',')):
+        if index == 0:
+            time = row[3]
         population.append(f" `{row[0]}` *{row[1]}*")
         weights.append(float(row[2]))
-    return population, weights
+    return population, weights, time
 
 
 class SaboClient(discord.Client):
@@ -24,9 +27,13 @@ class SaboClient(discord.Client):
     card_weights = []
     trap_population = []
     trap_weights = []
+    cards_time = None
+    traps_time = None
 
     async def on_ready(self):
         print('Logged on as', self.user)
+        print(f"Last updated cards: {self.cards_time}")
+        print(f"Last updated traps: {self.traps_time}")
 
     async def on_message(self, message):
         if message.author == client.user:
@@ -43,9 +50,9 @@ class SaboClient(discord.Client):
                     await message.channel.send("Something went wrong. ~~And that is HEX fault!~~")
 
             if " update cards" in message.content:
-                self.card_population, self.card_weights = update_lists(cards_url)
-                self.trap_population, self.trap_weights = update_lists(traps_url)
-                await message.channel.send("`List of cards has been updated!`")
+                self.card_population, self.card_weights, self.cards_time = update_lists(cards_url)
+                self.trap_population, self.trap_weights, self.traps_time = update_lists(traps_url)
+                await message.channel.send(f"```List of cards has been updated!\nCards last updated: {self.cards_time}\nTraps last updated: {self.cards_time}```")
             if " roll trap for " in message.content and len(message.mentions) > 1:
                 cards = random.choices(self.trap_population, weights=self.trap_weights, k=1)
                 header = "**---------------------- YOUR TRAP CARD ------------------------**\n"
@@ -65,6 +72,6 @@ class SaboClient(discord.Client):
 
 
 client = SaboClient()
-client.card_population, client.card_weights = update_lists(cards_url)
-client.trap_population, client.trap_weights = update_lists(traps_url)
+client.card_population, client.card_weights, client.cards_time = update_lists(cards_url)
+client.trap_population, client.trap_weights, client.traps_time = update_lists(traps_url)
 client.run('NzUyNzc4NDMzODU1MDk0Nzk1.X1cljA.IeBOG_KkcbM9Qb66q0CTqPghJVE')
