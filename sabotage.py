@@ -28,6 +28,7 @@ class SaboClient(discord.Client):
     trap_population = []
     trap_weights = []
     cards_time = None
+    monday_switch = False
     traps_time = None
 
     async def on_ready(self):
@@ -39,15 +40,22 @@ class SaboClient(discord.Client):
         if message.author == client.user:
             return
         if message.mentions and message.mentions[0] == client.user:
+            if "turn on monday" in message.content:
+                self.monday_switch = True
+            if "turn off monday" in message.content:
+                self.monday_switch = False
             if "draw" in message.content:
-                amount_of_cards = message.content.split("draw ")[1]
-                try:
-                    amount_of_cards = int(amount_of_cards)
-                    cards = random.choices(self.card_population, weights=self.card_weights, k=amount_of_cards)
-                    header = "**========================= CARDS DEALT =======================**\n"
-                    await message.author.send(header + "\n".join(cards))
-                except Exception:
-                    await message.channel.send("Something went wrong. ~~And that is HEX fault!~~")
+                if self.monday_switch:
+                    amount_of_cards = message.content.split("draw ")[1]
+                    try:
+                        amount_of_cards = int(amount_of_cards)
+                        cards = random.choices(self.card_population, weights=self.card_weights, k=amount_of_cards)
+                        header = "**========================= CARDS DEALT =======================**\n"
+                        await message.author.send(header + "\n".join(cards))
+                    except Exception:
+                        await message.channel.send("Something went wrong. ~~And that is HEX fault!~~")
+                else:
+                    await message.channel.send("https://tenor.com/view/monkey-with-money-happy-withmoney-swag-dollars-more-money-gif-14116367")
 
             if " update cards" in message.content:
                 self.card_population, self.card_weights, self.cards_time = update_lists(cards_url)
