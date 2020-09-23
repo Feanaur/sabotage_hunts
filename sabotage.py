@@ -1,6 +1,6 @@
 import discord
 import random
-
+import os
 import csv
 import requests
 
@@ -82,4 +82,4 @@ class SaboClient(discord.Client):
 client = SaboClient()
 client.card_population, client.card_weights, client.cards_time = update_lists(cards_url)
 client.trap_population, client.trap_weights, client.traps_time = update_lists(traps_url)
-client.run('NzUyNzc4NDMzODU1MDk0Nzk1.X1cljA.IeBOG_KkcbM9Qb66q0CTqPghJVE')
+client.run(os.getenv("DISCORD_TOKEN"))
