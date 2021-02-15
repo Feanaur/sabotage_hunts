@@ -66,6 +66,12 @@ class SaboClient(discord.Client):
                 header = "**---------------------- YOUR TRAP CARD ------------------------**\n"
                 for mention in message.mentions[1:]:
                     await mention.send(header + "\n".join(cards))
+            if "Why Jam hates me?" in message.content:
+                random_hate_me_gif = random.choice([
+                    "https://media.discordapp.net/attachments/761784276714389535/789457045480538163/image0.gif",
+                    "https://tenor.com/view/borgar-02-nom-cheeseburger-day-hungry-gif-15074926",
+                ])
+                await message.channel.send(f"{random_hate_me_gif}")
             if "roll out of " in message.content:
                 max_roll = message.content.split("roll out of ")[1]
                 try:
@@ -74,6 +80,7 @@ class SaboClient(discord.Client):
                     await message.channel.send(f"You rolled {roll}.")
                 except Exception:
                     await message.channel.send("Something went wrong. ~~And that is HEX fault!~~")
+
 
         if "this is fine" in message.content:
             await message.channel.send("https://tenor.com/view/this-is-fine-fire-coffee-dog-gif-10959043")
