@@ -66,12 +66,6 @@ class SaboClient(discord.Client):
                 header = "**---------------------- YOUR TRAP CARD ------------------------**\n"
                 for mention in message.mentions[1:]:
                     await mention.send(header + "\n".join(cards))
-            if "Why Jam hates me?" in message.content:
-                random_hate_me_gif = random.choice([
-                    "https://media.discordapp.net/attachments/761784276714389535/789457045480538163/image0.gif",
-                    "https://tenor.com/view/borgar-02-nom-cheeseburger-day-hungry-gif-15074926",
-                ])
-                await message.channel.send(random_hate_me_gif)
             if "roll out of " in message.content:
                 max_roll = message.content.split("roll out of ")[1]
                 try:
@@ -83,6 +77,21 @@ class SaboClient(discord.Client):
 
         if "this is fine" in message.content:
             await message.channel.send("https://tenor.com/view/this-is-fine-fire-coffee-dog-gif-10959043")
+
+        if "Why u hate me " in message.content:
+            random_hate_me_gif = random.choice([
+                "https://media.discordapp.net/attachments/761784276714389535/789457045480538163/image0.gif",
+                "https://tenor.com/view/borgar-02-nom-cheeseburger-day-hungry-gif-15074926",
+                "https://media.discordapp.net/attachments/585278697720905729/803645754517749760/image0.gif",
+                "https://media.discordapp.net/attachments/772351531491262504/782305412828626944/image2.gif",
+                "https://media.discordapp.net/attachments/771737019784626196/797878593861845052/image0.gif",
+                "https://media.discordapp.net/attachments/772351531491262504/782305412317577236/image1.gif",
+                "https://media.discordapp.net/attachments/772351531491262504/784404304022077460/image0.gif",
+                "https://media.discordapp.net/attachments/772351531491262504/787136736261570590/image0.gif",
+                "https://media.discordapp.net/attachments/771737019784626196/788101150905860096/image0.gif",
+                "https://media.discordapp.net/attachments/788584127938428929/794268113490673684/image0.gif"
+            ])
+            await message.channel.send(random_hate_me_gif)
 
 
 client = SaboClient()
