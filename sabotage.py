@@ -89,7 +89,7 @@ class SaboClient(discord.Client):
                 "https://media.discordapp.net/attachments/772351531491262504/784404304022077460/image0.gif",
                 "https://media.discordapp.net/attachments/772351531491262504/787136736261570590/image0.gif",
                 "https://media.discordapp.net/attachments/771737019784626196/788101150905860096/image0.gif",
-                "https://media.discordapp.net/attachments/788584127938428929/794268113490673684/image0.gif"
+                "https://media.discordapp.net/attachments/788584127938428929/794268113490673684/image0.gif",
             ])
             await message.channel.send(random_hate_me_gif)
 
