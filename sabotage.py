@@ -77,8 +77,7 @@ class SaboClient(discord.Client):
 
         if "this is fine" in message.content:
             await message.channel.send("https://tenor.com/view/this-is-fine-fire-coffee-dog-gif-10959043")
-
-        if "Why u hate me " in message.content:
+        if "Why u hate me" in message.content:
             random_hate_me_gif = random.choice([
                 "https://media.discordapp.net/attachments/761784276714389535/789457045480538163/image0.gif",
                 "https://tenor.com/view/borgar-02-nom-cheeseburger-day-hungry-gif-15074926",
